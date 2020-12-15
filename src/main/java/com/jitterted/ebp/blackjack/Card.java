@@ -5,22 +5,31 @@ import org.fusesource.jansi.Ansi;
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class Card {
-  private final String suit;
+  private final String suit; // Suit suit
   private final String rank;
 
+  // Goal: Suit suit, String rank
   public Card(String suit, String rank) {
     this.suit = suit;
     this.rank = rank;
   }
 
   public int rankValue() {
-    if ("JQK".contains(rank)) {
+    if (isFaceCard()) {
       return 10;
-    } else if (rank.equals("A")) {
+    } else if (isAce()) {
       return 1;
     } else {
       return Integer.parseInt(rank);
     }
+  }
+
+  private boolean isAce() {
+    return rank.equals("A");
+  }
+
+  private boolean isFaceCard() {
+    return "JQK".contains(rank);
   }
 
   public String display() {
