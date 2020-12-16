@@ -33,7 +33,7 @@ public class Hand {
         .anyMatch(card -> card.rankValue() == 1);
 
     // if the total hand value <= 11, then count the Ace as 11 by adding 10
-    if (hasAce && handValue < 11) {
+    if (hasAce && handValue <= 11) {
       handValue += 10;
     }
 
@@ -49,5 +49,29 @@ public class Hand {
                             .map(Card::display)
                             .collect(Collectors.joining(
                                ansi().cursorUp(6).cursorRight(1).toString())));
+  }
+
+  boolean isBusted() {
+    return value() > 21;
+  }
+
+  boolean isLessThanOrEqualTo(int value) {
+    return value() <= value;
+  }
+
+  String displayValue() {
+    return String.valueOf(value());
+  }
+
+  boolean pushes(Hand hand) {
+    return value() == hand.value();
+  }
+
+  boolean beats(Hand hand) {
+    return hand.value() < value();
+  }
+
+  public boolean valueEquals(int value) {
+    return value() == value;
   }
 }
