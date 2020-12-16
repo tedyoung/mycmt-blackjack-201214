@@ -5,11 +5,10 @@ import org.fusesource.jansi.Ansi;
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class Card {
-  private final String suit; // Suit suit
+  private final Suit suit;
   private final String rank;
 
-  // Goal: Suit suit, String rank
-  public Card(String suit, String rank) {
+  public Card(Suit suit, String rank) {
     this.suit = suit;
     this.rank = rank;
   }
@@ -37,12 +36,12 @@ public class Card {
     lines[0] = "┌─────────┐";
     lines[1] = String.format("│%s%s       │", rank, rank.equals("10") ? "" : " ");
     lines[2] = "│         │";
-    lines[3] = String.format("│    %s    │", suit);
+    lines[3] = String.format("│    %s    │", suit.symbol());
     lines[4] = "│         │";
     lines[5] = String.format("│       %s%s│", rank.equals("10") ? "" : " ", rank);
     lines[6] = "└─────────┘";
 
-    Ansi.Color cardColor = "♥♦".contains(suit) ? Ansi.Color.RED : Ansi.Color.BLACK;
+    Ansi.Color cardColor = suit.isRed() ? Ansi.Color.RED : Ansi.Color.BLACK;
     return ansi()
         .fg(cardColor).toString()
         + String.join(ansi().cursorDown(1)
@@ -52,9 +51,9 @@ public class Card {
 
   @Override
   public String toString() {
-    return "Card {" +
+    return "Card{" +
         "suit=" + suit +
-        ", rank=" + rank +
+        ", rank='" + rank + '\'' +
         '}';
   }
 
@@ -65,7 +64,7 @@ public class Card {
 
     Card card = (Card) o;
 
-    if (!suit.equals(card.suit)) return false;
+    if (suit != card.suit) return false;
     return rank.equals(card.rank);
   }
 
