@@ -12,13 +12,31 @@ public class Wallet {
     balance += amount;
   }
 
+  public int balance() {
+    return balance;
+  }
+
+  public void bet(int amount) {
+    ensureValidBetAmount(amount);
+    ensureSufficientBalance(amount);
+    balance -= amount;
+  }
+
+  private void ensureValidBetAmount(int amount) {
+    if (amount <= 0) {
+      throw new IllegalArgumentException();
+    }
+  }
+
   private void ensureAmountIsZeroOrMore(int amount) {
     if (amount < 0) {
       throw new IllegalArgumentException();
     }
   }
 
-  public int balance() {
-    return balance;
+  private void ensureSufficientBalance(int amount) {
+    if (amount > balance) {
+      throw new IllegalArgumentException();
+    }
   }
 }
