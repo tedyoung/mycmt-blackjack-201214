@@ -47,4 +47,41 @@ class GameBettingTest {
         .isEqualTo(100 - 50 + 100);
   }
 
+  @Test
+  public void playerWith80Bets60AndLosesBalanceIs20() throws Exception {
+    Game game = new Game();
+    game.playerDeposits(80);
+    game.playerBets(60);
+
+    game.playerLoses();
+
+    assertThat(game.playerBalance())
+        .isEqualTo(80 - 60);
+  }
+
+  @Test
+  public void playerWith75Bets40AndPushesBalanceIs75() throws Exception {
+    Game game = new Game();
+    game.playerDeposits(75);
+    game.playerBets(40);
+
+    game.playerPushes();
+
+    assertThat(game.playerBalance())
+        .isEqualTo(75 - 40 + 40);
+  }
+
+  @Test
+  public void playerWith400Bets400WinBlackjackBalanceIs1_000() throws Exception {
+    Game game = new Game();
+    game.playerDeposits(400);
+    game.playerBets(400);
+
+    game.playerWinsBlackjack();
+
+    assertThat(game.playerBalance())
+        .isEqualTo(400 - 400 + ((int) (400 * 2.5)));
+  }
+
+
 }
